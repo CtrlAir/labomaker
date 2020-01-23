@@ -17,8 +17,8 @@ int greenLed = 11;
 int buzzer = 10;
 int smokeA0 = A5;
 // Your threshold value
-int sensorThres = 400;
-
+int sensorThres = 50;
+int sensorbee = 100;
 void setup() {
   pinMode(redLed, OUTPUT);
   pinMode(greenLed, OUTPUT);
@@ -28,6 +28,7 @@ void setup() {
 }
 
 void loop() {
+  
   int analogSensor = analogRead(smokeA0);
 
   Serial.print("Pin A0: ");
@@ -37,7 +38,17 @@ void loop() {
   {
     digitalWrite(redLed, HIGH);
     digitalWrite(greenLed, LOW);
-    tone(buzzer, 1000, 200);
+    tone(buzzer, 1000);
+  delay(200);
+  }
+   if (analogSensor > sensorbee)
+  {
+    digitalWrite(redLed, HIGH);
+    digitalWrite(greenLed, LOW);
+    tone(buzzer, 1000); // Send 1KHz sound signal...
+  delay(1000);        // ...for 1 sec
+  noTone(buzzer);     // Stop sound...
+  delay(1000);        // ...for 1sec
   }
   else
   {
